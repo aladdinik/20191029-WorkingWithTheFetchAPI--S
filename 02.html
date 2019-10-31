@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>02</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,10 +45,43 @@
 'use strict';
 
 
-/**/
+/* .blob() / URL.createObjectURL() */
+/*to gain img url from fetch(), you need to use both .blob() and URL.createObjectURL() */
+/***** create blob object from fetch response with .blob() */
+fetch("images/ali.jpg")
+	.then( iKresponseBody => iKresponseBody.blob() ) /*1+*/
+	.then( iKblobObject => IK.printD(iKblobObject) ); /*OP blob object */ /*2+*/
+
+
+/***** gain access to the blob object url with URL.createObjectURL(iKblobObject) */
+fetch("images/ali.jpg")
+	.then( iKresponseBody => iKresponseBody.blob() )
+	.then( iKblobObject => URL.createObjectURL( iKblobObject ) ) /*3+*/
+	.then( iKblobUrl => IK.printD(iKblobUrl) ); /*OP "blob:http://127.0.0.1:51743/bb31b7e3-465f-41d3-b4ed-293f2ad444a3" */ /*4+*/
+
+
+/***** insert the image url inside the html <img> */
+fetch("images/ali.jpg")
+	.then( iKresponseBody => iKresponseBody.blob() )
+	.then( iKblobObject => URL.createObjectURL( iKblobObject ) )
+	.then( iKblobUrl => `<img src="${iKblobUrl}">` ) /*5+*/
+	.then( iKimgHtml => {
+		document.write(iKimgHtml) /*OP image on page */
+		console.log(iKimgHtml) /*OP '<img src="blob:http://127.0.0.1:51743/7f39b303-75b4-49fe-b2e1-e9556e199c65">' */
+	});
+
+/*1+ convert response into a blob object.
+2+ the blob object has its own properties.
+	+\ and its own methods, check online to see them.
+3+ URL.createObjectURL() take objects that have url within them. It will not work on any objects.
+4+ I believe this is the server url that your image is using.
+	+\ you will also notice the numbers keep changing but it does not cause any problems.
+4+ this is the image url, including the "blob:" string at the beginning.
+5+ insert the blob url as normal into img src . */
 
 
  /*OP */
+/***** d */
 /*--------------------- /script /////////////////////////*/ /* 
 	IK.printD( html );
 	IK.everyStyles( DOMelement );

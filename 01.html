@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>01 demo: different ways of copying array values to another array variable</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,7 +45,29 @@
 'use strict';
 
 
-/**/
+/*demo: different ways of copying array values to another array variable */
+/*iK I know this already but I just thought of adding this since its nice to see and easy to understand */
+const iKarray1 = ["iKaV1", "iKaV2", "iKaV3"];
+
+/********** .map() */
+const iKarray2 = iKarray1.map(function(iKitem, iKindex, iKarray) {
+	return iKitem;
+});
+
+IK.printD( iKarray2.join(" >> ") ); /*OP "iKaV1 >> iKaV2 >> iKaV3" */
+
+/********** for in loop */
+const iKarray3 = [];
+for (let i in iKarray2) {
+	iKarray3.push(iKarray2[i]);
+};
+
+IK.printD( iKarray3.join(" << ") ); /*OP "iKaV1 << iKaV2 << iKaV3" */
+
+/********** spread operator */
+const iKarray4 = [...iKarray3];
+
+IK.printD( iKarray4.join(" ^^ ") ); /*OP "iKaV1 ^^ iKaV2 ^^ iKaV3" */
 
 
  /*OP */

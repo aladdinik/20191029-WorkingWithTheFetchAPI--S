@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>04 automatic live paint draw ????</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -32,6 +32,7 @@
 
 
 <!-- -->
+<canvas id="canvasElem" width="100" height="80" style="border:1px solid"></canvas>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -45,10 +46,18 @@
 'use strict';
 
 
-/**/
+/*automatic live paint draw ????*/
+/*i do not understand this but i kept because it was interesting and maybe someday you can find out how this work iK
++\ source: javascript.info */
+canvasElem.onmousemove = function(e) {
+	let ctx = canvasElem.getContext('2d');
+	ctx.lineTo(e.clientX, e.clientY);
+	ctx.stroke();
+};
 
 
  /*OP */
+/***** d */
 /*--------------------- /script /////////////////////////*/ /* 
 	IK.printD( html );
 	IK.everyStyles( DOMelement );

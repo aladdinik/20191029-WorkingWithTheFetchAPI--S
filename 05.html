@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>05</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,10 +45,41 @@
 'use strict';
 
 
-/**/
+/*using POST method with fetch() */
+const iKobject1 = {"iKoProperty1": "iKoV1", iKoProperty2: "iKoV2", iKoProperty3: "iKoV3"}; /*1+*/
 
+fetch("https://httpbin.org/post", { /*2+*/
+	method: "POST",	/*3+*/
+	headers: {	/*4+*/
+		"Content-Type": "application/json;charset=utf-8" /*5+*/
+	},
+	body: JSON.stringify(iKobject1) /*6+*/
+})/*END fetch() */
+	.then(iKresponseBody => iKresponseBody.json() )	/*7+*/
+	.then(IK.printD) /*OP response object */ /*8+*/
+
+/*1+ imagine I want to send this object through POST method as a json data.
+1+ iK notice "iKoProperty1": as it is wrap in quotes, which is bizarre because I always thought you cannot do that, perhaps it has something to do with some latest updates, or I got it wrong the whole time.
+2+ notice that the second argument of fetch() is an object syntax.
+3+ choose your http method you want to use.
+4+ it has to be the header line of the http request which probably requires input.
+	+\ i see most website and treehouse use the header: property but when I remove this entirely, it makes no difference.
+		+\ however I will still keep doing this as there must be a reason why this exist.
+5+ Content-Type: is the most common used request header: I have seen.
+5+ not sure "...;charset=utf-8" is required at the end, but there is no harm in including it I think. Got it from javascript.info btw.
+6+ this is the payload, where you send you data to POST.
+6+ sending iKobject1 as json.
+7+ you can still use the thenable handlers despite the change of http method.
+	+\ so you still receive the response body of the url.
+8+ you will notice the response object in the console will have the your iKobject1 data through its properties.
+	+\ the property called json: in the response object contains all your properties of iKobject1.
+		+\ .then(iKresponseBody => iKresponseBody.json ) you would use this if you want to gain access to them. 
+*/
+
+	zzzzzzzzz I think i am done here but have a quick checkover.
 
  /*OP */
+/***** d */
 /*--------------------- /script /////////////////////////*/ /* 
 	IK.printD( html );
 	IK.everyStyles( DOMelement );
