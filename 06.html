@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>06 id tags in html becomes automatic js variable</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -32,6 +32,9 @@
 
 
 <!-- -->
+<div id="iKdivId">iK div element</div>
+
+<span id="iKspanId">iK span element</span>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -45,7 +48,17 @@
 'use strict';
 
 
-/**/
+/*id tags in html becomes automatic js variable */
+console.log( iKdivId ); /*OP <div id="iKdivId">iK div element</div> */ /*1+*/
+
+iKdivId.style.cssText = 'background-color: red'; /*OP red background on the id div element */ /*2+*/
+
+console.log( iKspanId ); /*OP <span id="iKspanId">iK span element</span>*/ /*3+*/
+
+/*1+ any element with an id will automatically get an assign variable name.
+	+\ and the id variable name is now reserve, which means you cannot reassign it with something else.
+2+ just like any variable node, you can use it how you see fit.
+3+ id can be use on any element and it will reserve a variable name for it. */
 
 
  /*OP */

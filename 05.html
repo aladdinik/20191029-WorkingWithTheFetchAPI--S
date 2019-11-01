@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>05</title>
+    <title>05 using POST method with fetch()</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -69,14 +69,13 @@ fetch("https://httpbin.org/post", { /*2+*/
 5+ not sure "...;charset=utf-8" is required at the end, but there is no harm in including it I think. Got it from javascript.info btw.
 6+ this is the payload, where you send you data to POST.
 6+ sending iKobject1 as json.
+	+\ just remember you JSON.stringify() will only work on js objects, therefore you will need to convert map or set objects into arrays or object first.
 7+ you can still use the thenable handlers despite the change of http method.
 	+\ so you still receive the response body of the url.
 8+ you will notice the response object in the console will have the your iKobject1 data through its properties.
 	+\ the property called json: in the response object contains all your properties of iKobject1.
-		+\ .then(iKresponseBody => iKresponseBody.json ) you would use this if you want to gain access to them. 
-*/
+		+\ .then(iKresponseBody => iKresponseBody.json ) you would use this if you want to gain access to them. */
 
-	zzzzzzzzz I think i am done here but have a quick checkover.
 
  /*OP */
 /***** d */
