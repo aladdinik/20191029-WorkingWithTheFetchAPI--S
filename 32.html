@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>03 .headers</title>
+    <title></title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -32,7 +32,7 @@
 
 
 <!-- -->
-
+<input type="file" value="images/ali.jpg" id="fileinput"/>
 
 <!---------------------- /main /////////////////////////-->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -45,38 +45,38 @@
 'use strict';
 
 
-/* .headers */
-/* the headers object acts like a map object.
-	+\ which is why you can treat it like a map object and use map properties and method if you wish to.
-		+\ however just to be clear, it is not a map object but a headers object. */
+/*uploading a files via post or put*********/
+// Select your input type file and store it in a variable
+const input = document.getElementById('fileinput');
 
-/***** getting the header keys through for loop, just like a map object */
-fetch("https://jsonplaceholder.typicode.com/posts/1")
-	.then(iKresponseBody => {
-		for (let [key, value] of iKresponseBody.headers) {
-			IK.printD(`${key} = ${value}`);
-		}
-		IK.printD(iKresponseBody.headers) /*OP Headers object */ /*1+*/
-	}); /*OP	"cache-control = private, max-age=14400
-				content-type = application/json; charset=utf-8
-				expires = -1
-				pragma = no-cache" */ /*2+*/
+// This will upload the file after having read it
+const upload = (file) => {
+  fetch('https://httpbin.org/post', { // Your POST endpoint
+    method: 'POST',
+    headers: {
+      // Content-Type may need to be completely **omitted**
+      // or you may need something
+      "Content-Type": "image/jpg"
+    },
+    body: file // This is your file object
+  }).then(
+    response => response.json() // if the response is a JSON object
+  ).then(
+    success => console.log(success) // Handle the success response object
+  ).catch(
+    error => console.log(error) // Handle the error response object
+  );
+};
 
+// Event handler executed when a file is selected
+const onSelectFile = () => upload(input.files[0]);
 
-/***** using the map object properties/methods on the header object. */
-fetch("https://jsonplaceholder.typicode.com/posts/1")
-	.then(iKresponseBody => {
-		IK.printD(iKresponseBody.headers.get("Content-Type")) /*OP "application/json; charset=utf-8" */
-		IK.printD(iKresponseBody.headers.has("Content-Type")) /*OP true */
-	})
-
-/*1+ strangely the headers object is just an empty literal {} when shown on console.
-	+\ perhaps that has something to do with being asynchronous.
-2+ again strangely there should be more keys, not sure why.
-+\ good to know and maybe be handy when using the fetch() second argumen option.
-+\ iK also note that it also depend on the iKurl you used, because they can vary with results. */
-
-
+// Add a listener on your input
+// It will be triggered when a file will be selected
+input.addEventListener('change', onSelectFile, false);
+	
+	
+	
  /*OP */
 /***** d */
 /*--------------------- /script /////////////////////////*/ /* 

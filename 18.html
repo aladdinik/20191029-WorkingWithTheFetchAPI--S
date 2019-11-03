@@ -46,17 +46,6 @@
 
 
 /**/
-const iKobject1 = {iKoProperty1: "iKoV1", iKoProperty2: "iKoV2", iKoProperty3: "iKoV3"};
-
-fetch("https://jsonplaceholder.typicode.com/posts", {
-	method: "POST",
-	headers: {
-		["Content-Type"]: "application/json"
-	},
-	body: JSON.stringify(iKobject1)
-}) /*END fetch() */
-	.then( iKresponseBody => iKresponseBody.json() )
-	.then( iKresponseBody => IK.printD( iKresponseBody ) )
 
 
  /*OP */

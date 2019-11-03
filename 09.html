@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>09</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -31,7 +31,12 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- -->
+<!-- form elements -->
+<form id="iKformId">
+	<input id="iKinputTextId" type="text" name="iKtextName1" value="iKtextValue1">
+	<input id="iKinputPasswordId" type="password" name="iKpasswordName1" value="iKpasswordValue1">
+	<input id="iKsubmitId" type="submit">
+</form>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -45,7 +50,26 @@
 'use strict';
 
 
-/**/
+/* .append() / .set() */
+const iKformData = new FormData(); /*1+*/
+
+/***** .append(iKnewName, iKvalue) */
+iKformData.append("iKappendName1", "iKappendValue1");
+iKformData.append("iKappendName1", "iKappendValue2");
+
+/***** .set(iKnewName, iKvalue) */
+iKformData.set("iKsetName1", "iKsetValue1");
+iKformData.set("iKsetName1", "iKsetValue2");
+
+
+IK.printD( iKformData.get( "iKappendName1" ) );
+IK.printD( iKformData.get( "iKsetName1" ) );
+
+
+for (let iKarray of iKformData) {
+	IK.printD( iKarray )
+};
+ /*OP*/
 
 
  /*OP */

@@ -46,25 +46,6 @@
 
 
 /**/
-$.ajax(
-	"http://api.open-notify.org/astros.json",
-	{
-		method: "GET",
-		dataType: "json",
-		success: function(response, status, xhr) {
-			IK.printD( "iKresolved" )
-			IK.printD(status)
-			IK.printD(xhr)
-			IK.printD(response)
-		},
-		error: function(xhr, status, statusText) {
-			IK.printD( "iKrejected" )
-			IK.printD(xhr)
-			IK.printD(status)
-			IK.printD(statusText)
-		}
-	}
-);
 
 
  /*OP */

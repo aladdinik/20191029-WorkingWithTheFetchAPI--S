@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>08</title>
+    <title>08 FormData()</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -31,7 +31,12 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- -->
+<!-- form elements -->
+<form id="iKformId">
+	<input id="iKinputTextId" type="text" name="iKtextName1" value="iKtextValue1">
+	<input id="iKinputPasswordId" type="password" name="iKpasswordName1" value="iKpasswordValue1">
+	<input id="iKsubmitId" type="submit">
+</form>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -45,7 +50,50 @@
 'use strict';
 
 
-/**/
+/*FormData() 
++\ ik do not forget you have html also written. */
+/***** FormData( iKoptionalFormElement ); */
+const iKformData = new FormData( iKformId ); /*1+*/
+
+
+/***** .append(iKnewName, iKvalue) */
+/***** .set(iKnewName, iKvalue) */
+iKformData.append("iKappendName1", "iKappendValue1"); /*2+*/
+iKformData.set("iKsetName1", "iKsetValue1");
+
+iKformData.append("iKappendName2", iKinputTextId.value); /*3+*/
+
+
+IK.printD( iKformData ); /*OP {} */ /*4+*/
+
+
+for (let iKarray of iKformData) {	/*5+*/
+	IK.printD( iKarray )		/*6+*/
+};
+ /*OP	["iKtextName1", "iKtextValue1"]
+ 		["iKpasswordName1", "iKpasswordValue1"]
+ 		["iKappendName1", "iKappendValue1"]
+		["iKsetName1", "iKsetValue1"]
+		["iKappendName2", "iKtextValue1"]	*/
+
+/*1+ FormData() works similarly as map object, which has similar properties and method.
+	+\ however unlike map object, you can only insert form element within the parenthesis, and nothing else.
+		+\ but this is optional, you do not have in insert iKoptionalFormElement, and instead use the .append() or .set() method.
+1+ you only need to insert the form element node inside the parenthesis, and it will convert all the elements inside the form element into an 2 dimentional array of pairs.
+	+\ eg. [ 
+				[name attribute, value attribute],
+				[name attribute, value attribute],
+				[name attribute, value attribute] 
+			]
+2+ difference between .append() and .set() is, if there are 2 or more repeated name (iKnewName) in the formData object, .set() will override its value with the last repeated name (iKnewName). But .append() will not override anything, instead it will add new key pair, so you will have 2 or more repeated name (iKnewName) but with different value.
+	+\ iK however when experimented i get 2 .append() repeated name with both on separate value, but will always get the first value when I use .get() ???.
+3+ if you want to target a specific element in the form element, than get its node and use .value (or .name) as shown in the demo.
+	+\ however this will not work on all elements, such as input[type=file] element.
+4+ it appears as an empty object literal, but just like map object you need to use loop syntax to see all data.
+5+ just like map object you can instead use destructuring on iKarray since each array is a pair.
+	+\ for (let [iKkey, iKvalue] of iKformData) {...}		=eg.
+6+ remember you could use index 0 or 1 bracket to gain the values.
++\ remember you can use many other properties and method on formdata object, and most are the same as map object properties and method. */
 
 
  /*OP */

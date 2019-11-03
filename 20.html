@@ -46,19 +46,6 @@
 
 
 /**/
-const xhr = new XMLHttpRequest();
-
-xhr.onreadystatechange = function() {
-	if (xhr.readyState === 4) {
-		IK.printD(xhr.responseText)	
-	} else {
-		IK.printD("failed")
-	}
-};
-
-xhr.open("GET", "http://api.open-notify.org/astros.json");
-
-xhr.send();
 
 
  /*OP */

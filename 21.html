@@ -45,25 +45,7 @@
 'use strict';
 
 
-/*FETCH STRUCTURE*/
-async function iKasyncFunction() {
-	try {
-		return await fetch("http://api.open-notify.org/astros.json")
-			.then( iKob => {
-				IK.printD(iKob);
-				return iKob;
-			})
-			.then(iKfet => iKfet.json() )
-			.then( iKfetRes => IK.printD(iKfetRes) )
-
-	} catch(iKerrorPar) {
-		throw new Error( "iKreject333 " + iKerrorPar )
-	};
-}; /*END iKasyncFunction */
-
-const ik = iKasyncFunction();
-//	IK.printD(ik);
-//	ik.then( x => IK.printD(x) )
+/**/
 
 
  /*OP */
