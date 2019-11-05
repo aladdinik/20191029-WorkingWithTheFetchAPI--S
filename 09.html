@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>09</title>
+    <title>09 .append() / .set() / .get() / .getAll()</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -31,12 +31,7 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- form elements -->
-<form id="iKformId">
-	<input id="iKinputTextId" type="text" name="iKtextName1" value="iKtextValue1">
-	<input id="iKinputPasswordId" type="password" name="iKpasswordName1" value="iKpasswordValue1">
-	<input id="iKsubmitId" type="submit">
-</form>
+<!--  -->
 
 
 <!---------------------- /main /////////////////////////-->
@@ -50,26 +45,42 @@
 'use strict';
 
 
-/* .append() / .set() */
+/* .append() / .set() / .get() / .getAll() */
 const iKformData = new FormData(); /*1+*/
 
 /***** .append(iKnewName, iKvalue) */
-iKformData.append("iKappendName1", "iKappendValue1");
+iKformData.append("iKappendName1", "iKappendValue1"); /*2+*/
 iKformData.append("iKappendName1", "iKappendValue2");
 
+IK.printD( iKformData.get( "iKappendName1" ) ); /*OP "iKappendValue1" */ /*3+*/
+IK.printD( iKformData.getAll( "iKappendName1" ) ); /*OP ["iKappendValue1", "iKappendValue2"] */ /*4+*/
+
+
 /***** .set(iKnewName, iKvalue) */
-iKformData.set("iKsetName1", "iKsetValue1");
+iKformData.set("iKsetName1", "iKsetValue1"); /*5+*/
 iKformData.set("iKsetName1", "iKsetValue2");
 
-
-IK.printD( iKformData.get( "iKappendName1" ) );
-IK.printD( iKformData.get( "iKsetName1" ) );
+IK.printD( iKformData.get( "iKsetName1" ) ); /*OP "iKsetValue2" */ /*6+*/
 
 
+/***** using for loop on formdata object. */
 for (let iKarray of iKformData) {
 	IK.printD( iKarray )
 };
- /*OP*/
+ /*OP	["iKappendName1", "iKappendValue1"]
+		["iKappendName1", "iKappendValue2"]
+		["iKsetName1", "iKsetValue2"]	*/ /*7+*/
+
+/*1+ notice I did not insert <form> element.
+2+ .append() adds to the formdata object, but will not override any previous  iKnewName value.
+	+\ therefore you will have 2 different iKvalue with the same iKnewName.
+3+ but when you use .get() you will only get the first value of the repeated iKnewName.
+4+ when you use .getAll(), you will get all the values in array, given to the repeated iKnewName.
+5+ .set() does add to the formdata object too, but it will override any repeated iKnewName with the last value given.
+	+\ therefore you will only have 1 iKnewName with 1 iKvalue.
+6+ no point using .getAll() since there will only be one value, unless you want it to return in array.
+7+ you have to use for loops to view all of formdata object values.
+7+ you will also notice there is 2 iKappendName1 name, but both with different value. And only one iKsetName1. */
 
 
  /*OP */

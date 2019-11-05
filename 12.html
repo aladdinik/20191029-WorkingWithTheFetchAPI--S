@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>12</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -31,7 +31,11 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- -->
+<!-- form element -->
+<form id="iKformId">
+	<input type="file" id="iKinputFileId1">
+	<input type="submit" id="iKsubmitId">
+</form>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -44,8 +48,28 @@
 /* + + + + + + + + + + + SCRIPT --------------------------*/
 'use strict';
 
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz trying to get formdata form fetch to insert img on page ...
+/*sending files with fetch() */
+document.onsubmit = function(event) {
+	event.preventDefault();
 
-/**/
+	const iKformdata = new FormData();
+
+	iKformdata.append("iKappendName1", iKinputFileId1.files[0]);
+
+	fetch("https://httpbin.org/post", {
+		method: "POST",
+		body: iKformdata
+	})
+		.then( iKresponse => iKresponse.get("iKappendName1") )
+		.then( iKblobObject => URL.createObjectURL( iKblobObject ) )
+		.then( iKblobUrl => `<img src="${iKblobUrl}">` )
+		.then( iKimgHtml => {
+			document.write(iKimgHtml)
+			console.log(iKimgHtml)
+		})
+//		.then( iKresponse => console.log(iKresponse) )
+}; /*END document.onsubmit */
 
 
  /*OP */

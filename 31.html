@@ -31,7 +31,14 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- -->
+<!-- form elements -->
+<form id="iKformId">
+	<input id="iKinputTextId" type="text" name="iKtextName1" value="iKtextValue1">
+	<input id="iKinputPasswordId" type="password" name="iKpasswordName1" value="iKpasswordValue1">
+	<input id="iKinputFileId1" type="file" name="iKfileName1">
+	<input id="iKinputFileId2" type="file" name="iKfileName2">
+	<input id="iKsubmitId" type="submit">
+</form>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -46,20 +53,6 @@
 
 
 /**/
-document.onsubmit = async function(event) {
-	event.preventDefault();
-
-	console.log("iKsync1");
-
-	await fetch("https://httpbin.org/post", {
-		method: "POST",
-		body: new FormData(iKformId)
-	})
-		.then( iKresponseBody => iKresponseBody.json() )
-		.then( iKresponseBody => console.log(iKresponseBody) )
-
-	console.log("iKsync2");
-};
 
 
  /*OP */

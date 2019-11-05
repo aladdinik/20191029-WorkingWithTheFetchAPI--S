@@ -53,8 +53,8 @@
 /***** getting the header keys through for loop, just like a map object */
 fetch("https://jsonplaceholder.typicode.com/posts/1")
 	.then(iKresponseBody => {
-		for (let [key, value] of iKresponseBody.headers) {
-			IK.printD(`${key} = ${value}`);
+		for (let [iKkey, iKvalue] of iKresponseBody.headers) {
+			IK.printD(`${iKkey} = ${iKvalue}`);
 		}
 		IK.printD(iKresponseBody.headers) /*OP Headers object */ /*1+*/
 	}); /*OP	"cache-control = private, max-age=14400

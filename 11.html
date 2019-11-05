@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>11 selecting multiple files with one input[type=file] / multiple attribute</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -31,7 +31,11 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- -->
+<!-- form elements -->
+<form id="iKformId">
+	<input type="file" id="iKinputFileId1" multiple> <!--1+-->
+	<input type="submit" id="iKsubmitId">
+</form>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -45,7 +49,22 @@
 'use strict';
 
 
-/**/
+/*selecting multiple files with one input[type=file] / multiple attribute */
+document.onsubmit = function(event) {
+	event.preventDefault();
+	
+	const iKformData = new FormData();
+
+	iKformData.append("iKappendName1", iKinputFileId1.files[0]); /*2+*/
+	iKformData.append("iKappendName1", iKinputFileId1.files[1]);
+
+	IK.printD( iKformData.getAll( "iKappendName1" ) ); /*OP [file object, file object] */
+}; /*END document.onsubmit */
+
+/*1+ as you can see only one input[type=file] is used in html, but the keyword 'multiple' us used to allowed multiple file selection.
+	+\ when the user is selecting their files, they need to hold down the CTRL or SHIFT button as they select each multiple files.
+2+ each index number will provide the file.
+2+ however if the user selects more files than you have .append(), than the additional files will be remove when submitted. */
 
 
  /*OP */

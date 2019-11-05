@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>10 adding files to the formdata object / .files (file object)</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -31,7 +31,12 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- -->
+<!-- form elements -->
+<form id="iKformId">
+	<input type="file" id="iKinputFileId1">
+	<input type="file" id="iKinputFileId2">
+	<input type="submit" id="iKsubmitId">
+</form>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -45,7 +50,32 @@
 'use strict';
 
 
-/**/
+/* adding files to the formdata object / .files (file object) */
+/* technically file object is a subclass of blob object */
+document.onsubmit = function(event) { /*1+*/
+	event.preventDefault();
+	
+	const iKformData = new FormData();
+
+	iKformData.append("iKappendName1", iKinputFileId1.files[0]); /*2+*/
+	iKformData.append("iKappendName2", iKinputFileId2.files[0], "iKfile2"); /*3+*/
+
+	IK.printD( iKformData.get( "iKappendName1" ) ); /*OP file object */ /*4+*/
+	IK.printD( iKformData.get( "iKappendName2" ) ); /*OP file object */
+}; /*END document.onsubmit */
+
+/*1+ input[type=file] from user will only work with event listener.
+	+\ iK but i think you can set up declared files beforehand with file() object.
+2+ you must use .files[0] to insert the input[type=file] files.
+	+\ it has to be [0] everytime, unless you are doing multiple files with the same input[type=file] or something.
+2+ you can insert almost any files, including img / video / docs / etc...
+3+ notice I added a 3 argument for .append() , this is optional when you are inserting file or blob object.
+	+\ it basically allows you to rename the 'name' property of the file/blob object.
+		+\ if you do not use the third argument than the file/blob object will take the default name to the file name it already has.
+			+\ which is why it is useless to use the name attribute on input[type=file], since it will just ignore it. However iK still use for best practice.
+	+\ VIP however if you choose to use the 3rd argument, and the file/blob object remains empty after submitted, than it will throw error.
+		+\ so you might want to consider using try...catch with it too.
+4+ the file object contain numerous of information such as name: / type: size: / etc... */
 
 
  /*OP */
