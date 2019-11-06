@@ -48,12 +48,24 @@
 /*FETCH STRUCTURE*/
 async function iKasyncFunction() {
 	try {
-		return await fetch("http://api.open-notify.org/astros.json")
+		return await fetch("https://httpbin.org/get", {
+			method: "GET",
+			headers: {
+				"Content-Type": "applcation/json"
+			},
+			body:
+		})
 			.then( iKob => {
-				IK.printD(iKob);
+				console.log(iKob);
 				return iKob;
 			})
 			.then(iKfet => iKfet.json() )
+			.then( x => x.formData() )
+			.then( x => x.blob() )
+			.then( x => URL.createObjectURL(x) )
+			.then( iKurl => `<img src="${iKurl}">` )
+			.then( x => console.log(x) )
+			.then( x => document.write(x) )
 			.then( iKfetRes => IK.printD(iKfetRes) )
 
 	} catch(iKerrorPar) {

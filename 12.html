@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>12</title>
+    <title>12 sending files with fetch() / creating image file from the response</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -48,28 +48,33 @@
 /* + + + + + + + + + + + SCRIPT --------------------------*/
 'use strict';
 
-zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz trying to get formdata form fetch to insert img on page ...
-/*sending files with fetch() */
+
+/*sending files with fetch() / creating image file from the response */
 document.onsubmit = function(event) {
 	event.preventDefault();
 
 	const iKformdata = new FormData();
-
 	iKformdata.append("iKappendName1", iKinputFileId1.files[0]);
 
-	fetch("https://httpbin.org/post", {
+	fetch("https://httpbin.org/anything", {
 		method: "POST",
+/*		headers: {
+			"Content-Type": "multipart/form-data"
+		},	*/ /*1+*/
 		body: iKformdata
 	})
-		.then( iKresponse => iKresponse.get("iKappendName1") )
-		.then( iKblobObject => URL.createObjectURL( iKblobObject ) )
-		.then( iKblobUrl => `<img src="${iKblobUrl}">` )
-		.then( iKimgHtml => {
-			document.write(iKimgHtml)
-			console.log(iKimgHtml)
-		})
-//		.then( iKresponse => console.log(iKresponse) )
+		.then( iKresponse => iKresponse.json() ) /*2+*/
+		.then( iKjson => iKjson.files.iKappendName1 ) /*3+*/
+		.then( iKurl => `<img src="${iKurl}">` )
+		.then( iKimgElement => IK.printD( iKimgElement ) )
 }; /*END document.onsubmit */
+
+/*1+ there are many occasion that you do not need to establish the Content-Type of the file, because most of the time it is automatic.
+	+\ iK I think you only do this if the file is not obvious to the server, perhaps it could be a file that can be several types.
+2+ I did try to use .blob() for it and it did not work. I think it is because the httpbin.org only returns json format for the response object.
+3+ the image was stored in the files property, which I suspect that it was a file object too, and no longer a formdata object.
+	+\ apparently the file object value was stored as a url automatically, which I suspect is stored on the post server and you are just collecting the src url.
+	+\ the url also starts with "data:..." which maybe indicate it is a file object. */
 
 
  /*OP */
