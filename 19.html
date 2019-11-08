@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>19</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -44,8 +44,42 @@
 /* + + + + + + + + + + + SCRIPT --------------------------*/
 'use strict';
 
-
+zzzzzzzzzzzzz i could use url object to get files and img through the server, so finish here first.
 /**/
+const img = document.createElement("IMG");
+img.src = "images/ali.jpg";
+const iKurlOb = new URL(img.src);
+//IK.printD(iKurlOb)
+	
+	
+async function iKasyncFunction() {
+	try {
+		return await fetch("https://httpbin.org/post", {
+			method: "POST",
+//			headers: {
+//				"Content-Type": "applcation/json"
+//			},
+			body: iKurlOb
+		})
+			.then( iKob => {
+				console.log(iKob);
+				return iKob;
+			})
+			.then(iKfet => iKfet.json() )
+//			.then( x => x.formData() )
+//			.then( x => x.blob() )
+//			.then( x => URL.createObjectURL(x) )
+			.then( iKurl => `<img src="${iKurl.data}">` )
+//			.then( x => console.log(x) )
+//			.then( x => document.write(x) )
+			.then( iKfetRes => IK.printD(iKfetRes) )
+
+	} catch(iKerrorPar) {
+		throw new Error( "iKreject333 " + iKerrorPar )
+	};
+}; /*END iKasyncFunction */
+
+const ik = iKasyncFunction();
 
 
  /*OP */

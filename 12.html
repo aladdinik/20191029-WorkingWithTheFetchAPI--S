@@ -67,6 +67,7 @@ document.onsubmit = function(event) {
 		.then( iKjson => iKjson.files.iKappendName1 ) /*3+*/
 		.then( iKurl => `<img src="${iKurl}">` )
 		.then( iKimgElement => IK.printD( iKimgElement ) )
+			/*OP '<img src="iKurl">' */
 }; /*END document.onsubmit */
 
 /*1+ there are many occasion that you do not need to establish the Content-Type of the file, because most of the time it is automatic.

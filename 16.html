@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>16 use .searchParams for query string / .searchParams is an object too with its own methods</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,7 +45,27 @@
 'use strict';
 
 
-/**/
+/*use .searchParams for query string / .searchParams is an object too with its own methods.
++\ there is a URLsearchParams() constructor too, but I did not demo here as it almost does the same thing. */
+const iKurlObject1 = new URL("http://www.iKhost.com:1234/path#hash");
+
+iKurlObject1.searchParams.set("iKprop", "iKvalue")
+
+IK.printD(iKurlObject1); /*OP
+	"http://www.ikhost.com:1234/path?iKprop=iKvalue#hash" */ /*1+*/
+
+
+iKurlObject1.searchParams.append("iKprop", "iK value2")
+
+IK.printD(iKurlObject1); /*OP
+	http://www.ikhost.com:1234/path?iKprop=iKvalue&iKprop=iKvalue2#hash */ /*2+*/
+
+
+/*1+ notice automatically adds the ? after the path name.
+1+ notice the #hash name has not been remove too which is why it is recommened to use .searchParams and not .search to set your query string.
+2+ notice it automatically added & after the first query string values.
+2+ notice that space is + and not %20, it should work fine as long as it occurs after the ? query string from what I read.
+	+\ otherwise you might want to regEx anything before that, or just use encodeURI(). */
 
 
  /*OP */

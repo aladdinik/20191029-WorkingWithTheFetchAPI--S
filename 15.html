@@ -45,7 +45,17 @@
 'use strict';
 
 
-/**/
+/*url object .username and .password */
+const iKurlObject1 = new URL("/path/name?prop1=value1#hashName", "http://www.iKhost.com:1234");
+
+iKurlObject1.username = "president";
+
+iKurlObject1.password = "Trump";
+
+IK.printD(iKurlObject1); /*OP
+	"http://president:Trump@www.ikhost.com:1234/path/name?prop1=value1#hashName" */ /*1+*/
+
+/*1+ as you can see, the username and password will go before the host name, and add a @, as an email type. */
 
 
  /*OP */

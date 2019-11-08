@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>17 encodeURIComponent() / encodeURI() / decodeURIComponent() / decodeURI()</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,7 +45,40 @@
 'use strict';
 
 
-/**/
+/*encodeURIComponent() / encodeURI() / decodeURIComponent() / decodeURI() */
+/*each function determines how you want to encode or decode url with the & .
+	+\ so you can optionally write query string as a whole with property and value or separately. 
+	+\ you can use this as normal string if you want to but it was design with url code rules and its special %.. entity. */
+
+/***** encode string to url ****/
+let iKencodeString = "iK encode&Value";
+
+/*encodeURIComponent() converts everything including & */
+IK.printD( encodeURIComponent(iKencodeString) ); /*OP
+	"iK%20encode%26Value" */ /*1+*/
+
+/*encodeURI() converts everything excluding & and some others too */
+IK.printD( encodeURI(iKencodeString) ); /*OP
+	"iK%20encode&Value" */ /*2+*/
+
+
+/***** decode url to string ****/
+let iKdecodeString = "iK%20decode%26Value";
+
+/*decodeURIComponent() converts everything including & */
+IK.printD( decodeURIComponent(iKdecodeString) ); /*OP
+	"iK decode&Value" */ /*3+*/
+
+/*decodeURI() converts everything excluding & */
+IK.printD( decodeURI(iKdecodeString) ); /*OP
+	"iK decode%26Value" */ /*4+*/
+
+
+/*1 notice & has been converted to %26 .
+2+ notice & has not been converted.
+2+ encodeURI() is more design to keep url string in mind while the encodeURIComponent() does not as it converts absolutely everything.
+3+ notice %26 has been converted to & .
+4+ notice %26 has not been converted. */
 
 
  /*OP */
