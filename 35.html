@@ -46,19 +46,23 @@
 
 
 /**/
-const xhr = new XMLHttpRequest();
+const iKxhr = new XMLHttpRequest();
 
-xhr.onreadystatechange = function() {
-	if (xhr.readyState === 4) {
-		IK.printD(xhr.responseText)	
-	} else {
-		IK.printD("failed")
-	}
+iKxhr.open("POST", "https://httpbin.org/post");
+
+iKxhr.responseType = "json";
+
+iKxhr.send( JSON.stringify({iKprop1: "iKvalue1"}) );
+
+iKxhr.onload = function() {
+	IK.printD( iKxhr.response );
 };
 
-xhr.open("GET", "http://api.open-notify.org/astros.json");
+iKxhr.timeout = 10000;
 
-xhr.send();
+iKxhr.ontimeout = function() {
+	IK.printD( "iKtimeout" );
+};
 
 
  /*OP */

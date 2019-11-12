@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>21 .responseType / .timeout / .ontimeout = function() {...}</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,7 +45,35 @@
 'use strict';
 
 
-/**/
+/* .responseType / .timeout / .ontimeout = function() {...} */
+/* the XMLHttpRequest() has actually more options than fetch() at the moment due to it being around for a long time, plus it is more flexible too.
+	+\ however xhr object will slowly be deprecate as time goes on. */
+const iKxhr = new XMLHttpRequest();
+
+iKxhr.open("POST", "https://httpbin.org/post"); /*1+*/
+
+iKxhr.responseType = "json";	/*2+*/
+
+iKxhr.send( JSON.stringify({iKprop1: "iKvalue1"}) ); /*3+*/
+
+iKxhr.onload = function() {
+	IK.printD( iKxhr.response ); /*OP response object*/ /*4+*/
+};
+
+iKxhr.timeout = 10000;	/*5+*/
+
+iKxhr.ontimeout = function() {	/*6+*/
+	IK.printD( "iKtimeout" );
+};
+
+/*1+ just using POST method, but I am sure you could use any method as long as you tweak a few things differently.
+2+ .responseType is your chosen format you would like to send or recieve your reponse object body.
+2+ there are many format choice, the default is "" string.
+3+ if you want to post your body data as json than you first need to turn your object into json text so .responseType will work accordingly.
+4+ you could use JSON.parse() on your data to turn it back to object.
+4+ remember this is not necessary if you are posting.
+5+ set a timer of how long has for the request to be successful otherwise it will abort, and your .ontimeout callback will run as error.
+6+ will only run if .timeout timer is up. */
 
 
  /*OP */

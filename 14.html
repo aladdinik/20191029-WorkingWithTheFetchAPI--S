@@ -55,10 +55,10 @@ IK.printD(iKurlObject1); /*OP
 const iKurlObject2 = new URL("?prop2=value2", iKurlObject1);
 
 IK.printD(iKurlObject2); /*OP
-	"http://www.ikhost.com:1234/path/?prop2=value2" */ /*1+*/
+	"http://www.ikhost.com:1234/path/name?prop2=value2" */ /*1+*/
 
-/*1+ as you can see, it completely replaces all the path name after the port name.
-1+ you will also need to add the ? yourself*/
+/*1+ flexible changes you can make.
+1+ you will also need to add the ? yourself so the url object knows it is a query string. */
 
 
  /*OP */

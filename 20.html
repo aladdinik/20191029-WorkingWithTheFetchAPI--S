@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>20 selecting <form> element (with its nested elements too) using document.forms.iKformAttributeName</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -31,7 +31,11 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- -->
+<!-- using form element -->
+<form name="iKformAttributeNameValue" id="iKid">	<!--1+-->
+	<input name="name" value="John">
+	<input name="surname" value="Smith">
+</form>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -45,7 +49,31 @@
 'use strict';
 
 
-/**/
+/*selecting <form> element (with its nested elements too) using document.forms.iKformAttributeName */
+/* works very similar as id attribute where it collects the node element into a variable.
+	+\ but differences is there is no solid variable name using this method.
+	+\ but you do need to set the <form> name attribute for you to gain the <form> node element. */
+IK.printD( document.forms ); /*OP htmlCollection object of the <form> */
+
+IK.printD( document.forms.iKformAttributeNameValue ); /*OP <form> element node with all its nested elements inside */ /*2+*/
+
+
+/***** including it in formdata object */
+const iKformdata = new FormData( document.forms.iKformAttributeNameValue ); /*3+*/
+
+for (let iKformdataArraysKeys of iKformdata) {
+	IK.printD( iKformdataArraysKeys );
+}; /*OP
+		["name", "John"]
+		["surname", "Smith"] */
+
+/*1+ without the <form> name attribute, you will only get the html collection object but not the actual node element of <form> .
+2+ you add the name attribute too at the end.
+	+\ the name attribute acts like class or id .
+	+\ you oaught to include name and value attribute to its nested elements if you want to use formdata object.
+2+ you can also do the same with id attribute at the back too.
+	+\ but you cannot do the same with class attribute.
+3+ works no problem because it is still just a <form> element. */
 
 
  /*OP */

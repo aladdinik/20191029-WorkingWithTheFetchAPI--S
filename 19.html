@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>19</title>
+    <title>19 creating a image url (src) for the url object / posting and/or retreiving the url object with the image url src</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -44,42 +44,35 @@
 /* + + + + + + + + + + + SCRIPT --------------------------*/
 'use strict';
 
-zzzzzzzzzzzzz i could use url object to get files and img through the server, so finish here first.
-/**/
-const img = document.createElement("IMG");
-img.src = "images/ali.jpg";
-const iKurlOb = new URL(img.src);
-//IK.printD(iKurlOb)
-	
-	
-async function iKasyncFunction() {
-	try {
-		return await fetch("https://httpbin.org/post", {
-			method: "POST",
-//			headers: {
-//				"Content-Type": "applcation/json"
-//			},
-			body: iKurlOb
-		})
-			.then( iKob => {
-				console.log(iKob);
-				return iKob;
-			})
-			.then(iKfet => iKfet.json() )
-//			.then( x => x.formData() )
-//			.then( x => x.blob() )
-//			.then( x => URL.createObjectURL(x) )
-			.then( iKurl => `<img src="${iKurl.data}">` )
-//			.then( x => console.log(x) )
-//			.then( x => document.write(x) )
-			.then( iKfetRes => IK.printD(iKfetRes) )
 
-	} catch(iKerrorPar) {
-		throw new Error( "iKreject333 " + iKerrorPar )
-	};
-}; /*END iKasyncFunction */
+/*creating a image url (src) for the url object / posting and/or retreiving the url object with the image url src */
+/*iK I discovered this method myself so I do not know if there is a better or offical way, but this method does work */
+const iKimg = document.createElement("IMG"); /*1+*/
+iKimg.src = "images/ali.jpg";	/*2+*/
+const iKurlOb = new URL(iKimg.src);	/*3+*/
 
-const ik = iKasyncFunction();
+
+try {
+	fetch("https://httpbin.org/post", {
+		method: "POST",
+		body: iKurlOb
+	})		/*4+*/
+		.then( iKresponseObject => iKresponseObject.json() ) /*5+*/
+		.then( iKjsonObject => `<img src="${iKjsonObject.data}">` )
+		.then( iKimgTag => IK.printD(iKimgTag) );
+} catch(iKerrorPar) {
+	throw new Error( "iKreject333 " + iKerrorPar )
+};
+/*OP <img src="http://127.0.0.1:53529/images/ali.jpg"> */
+
+/*1+ create the <img> element.
+2+ using .src in your text editor somehow knows the server link for the file.
+	+\ I suspect it is to do with the ip address which is why it does work.
+3+ it will not work if you try to enter the file name alone unless you somehow know the ip address and add that too.
+4+ it automatically post Content-Type: as text/plain . so no need to type it myself.
+	+\ but not as url object from what I can see.
+5+ httpbin automatically return response object as json. so you convert it into object.
+6+ the image url was stored in the property .data, which contained the url string. */
 
 
  /*OP */

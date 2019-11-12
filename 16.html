@@ -49,16 +49,16 @@
 +\ there is a URLsearchParams() constructor too, but I did not demo here as it almost does the same thing. */
 const iKurlObject1 = new URL("http://www.iKhost.com:1234/path#hash");
 
-iKurlObject1.searchParams.set("iKprop", "iKvalue")
+iKurlObject1.searchParams.set("iKprop1", "iKvalue1")
 
 IK.printD(iKurlObject1); /*OP
-	"http://www.ikhost.com:1234/path?iKprop=iKvalue#hash" */ /*1+*/
+	"http://www.ikhost.com:1234/path?iKprop1=iKvalue1#hash" */ /*1+*/
 
 
-iKurlObject1.searchParams.append("iKprop", "iK value2")
+iKurlObject1.searchParams.append("iKprop1", "iK value2")
 
 IK.printD(iKurlObject1); /*OP
-	http://www.ikhost.com:1234/path?iKprop=iKvalue&iKprop=iKvalue2#hash */ /*2+*/
+	"http://www.ikhost.com:1234/path?iKprop1=iKvalue1&iKprop1=iK+value2#hash"" */ /*2+*/
 
 
 /*1+ notice automatically adds the ? after the path name.
