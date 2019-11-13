@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>22</title>
+    <title>22 typical GET code using the xhr object</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,7 +45,43 @@
 'use strict';
 
 
-/**/
+/*typical GET code using the xhr object */
+/*source: javascript.info . */
+let xhr = new XMLHttpRequest();
+
+xhr.open('GET', "https://httpbin.org/get");
+
+xhr.send();
+
+xhr.onload = function() {
+	if (xhr.status != 200) { /* HTTP error? */
+		/* handle the error */
+		alert( 'Error: ' + xhr.status);
+		return;
+	}
+
+	IK.printD( "iK response successful" ); /*1+*/
+	IK.printD(xhr.responseText);
+	/* get the response from xhr.response */
+	/* iK you enter your codes here if 200 status is successful */
+};
+
+xhr.onprogress = function(event) {
+	/* report progress */
+	if (event.lengthComputable) {
+		console.log(`Received ${event.loaded} of ${event.total} bytes`);  /*2+*/
+	} else {
+		console.log(`Received ${event.loaded} bytes`); /* no Content-Length */ /*3+*/
+	}
+};
+
+xhr.onerror = function() {
+	/* handle non-HTTP error (e.g. network down) */
+};
+
+/*1+ I inserted this here.
+2+ I changed alert() to console.log() here and several other places.
+3+ basically this code will run if the server denies you access to their header Content-Length . */
 
 
  /*OP */

@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>23</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,7 +45,43 @@
 'use strict';
 
 
-/**/
+/*long polling / callback within function itself */
+/* source: javascript.info .
++\ apparently good at keeping persistent connection.
++\ A sketch of client-side subscribe function that makes long requests.
+	+\ imagine this is a chat room.
+		+\ but a lot is missing, however this is a very simple example of the structure required for constant connection.
++\ notice it is simply the callback function calling within itself */
+async function subscribe() {
+	let response = await fetch("https://httpbin.org/get"); /*1+*/ /*2+*/
+
+	if (response.status == 502) {
+		/* Status 502 is a connection timeout error, may happen when the connection was pending for too long, and the remote server or a proxy closed it */
+		/* let's reconnect */
+		await subscribe();
+	} else if (response.status != 200) {
+		/* An error - let's show it */
+/*		showMessage(response.statusText);	*/ /*1+*/
+		IK.printD(response.statusText); /*1+*/
+		/* Reconnect in one second */
+		await new Promise(resolve => setTimeout(resolve, 1000)); /*3+*/
+		await subscribe();
+	} else {
+		/* Get and show the message */
+		let message = await response.text();
+/*		showMessage(message);	*/ /*1+*/
+		IK.printD("showMessage") /*1+*/
+		/* Call subscribe() again to get the next message */
+		await subscribe();
+	}
+};
+
+subscribe();
+
+/*1+ iK tweaked here.
+2+ iK perhaps you could code their message in the query string as a way to send your message.
+	+\ however it will not be secure, so not recommended. use the body payload instead.
+3+ not sure why it needs to wait for 1 second to reconnect? */
 
 
  /*OP */
