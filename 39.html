@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>XX server-sent event / eventsource</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -39,6 +39,11 @@
 <script src="https://unpkg.com/popper.js@1.16.0/dist/umd/popper.min.js" type="text/javascript"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelement-and-player.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" integrity="sha256-G7A4JrJjJlFqP0yamznwPjAApIKPkadeHfyIwiaa9e0=" crossorigin="anonymous"></script>
+
+<script src='mockevent.js'></script>
+
 <script src="zIK/03JS/kiK.js" type="text/javascript"></script>
 <script>
 /* + + + + + + + + + + + SCRIPT --------------------------*/
@@ -46,7 +51,30 @@
 
 
 /**/
+// Instantiate a `MockeEvent` ----------
+var mockEvent = new MockEvent({
+    url: '/tweets',
+    setInterval: 1500,
+    responses: [
+        {name: 'first_tweet', data: 'first tweet'},
+        {name: 'tweet', data: 'a tweet'},
+        {name: 'tweet', data: 'another tweet'},
+        {name: 'tweet', data: 'fourth tweet'},
+        {name: 'last_tweet', data: 'last tweet'}
+    ],
+});
 
+// Instantiate an `EventSource` ----------
+var evtSource = new EventSource('/tweets');
+
+// Listening to specific event names and handling them
+evtSource.addEventListener('first_tweet', function(e){ console.log('first tweet', e)}, false);
+evtSource.addEventListener('tweet', function(e){ console.log('tweet', e)}, false);
+evtSource.addEventListener('last_tweet', function(e){ console.log('last tweet', e)}, false);
+
+// Listening for open and error events
+evtSource.onopen = function(e) {console.log('TWEET CONNECTION IS OPEN')}
+evtSource.onerror = function(e){console.log('TWEET CONNECTION GO BOOM', e.message)};
 
  /*OP */
 /***** d */

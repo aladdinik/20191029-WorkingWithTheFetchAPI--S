@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>25</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,7 +45,34 @@
 'use strict';
 
 
-/**/
+/*websocket / persistent connection*/
+/*creates a new protocol ws/wss, for a true high persistent connection.
+	+\ however it can be demanding on performance, and only suitable for certain situation such as high traffic chat room.
+	+\ the server-side url has to agree to websocket connection too, otherwise it will get rejected. */
+const iKwebsocket = new WebSocket("wss://echo.websocket.org"); /*1+*/
+
+console.log(iKwebsocket); /*OP websocket object */
+
+iKwebsocket.onopen = event => console.log("iKwsOpen"); /*OP "iKwsOpen" */ /*2+*/
+
+iKwebsocket.onerror = event => Error("iKwsError"); /*OP "iKwsError" */ /*3+*/
+
+console.log(iKwebsocket); /*OP websocket object */
+
+
+/*1+ you have to replace http:/https: with ws: or wss: as the protocol.
+	+\ BIM however websocket will only connect if the server-side url agrees to upgrade from http/https to ws:/wss: protocol.
+		+\ this is done automatically, the browser would ask the server-side through headers, and the server side has to set their headers to agree too.
+			+\ connection status will change from 200 to 101.
+	+\ ws is like http, and wss is like https .
+2+ open (.onopen) event is not necessary, but it can be good to let the user know connection was successful and they are online.
+3+ error (.onerror) event is not neccessary but it would be good to let your user know if something when wrong.
+	+\ however websocket does not retry connection, user will have to reload again.
+		+\ however iK you can write codes to retry the connection, check online for more details.
++\ in this demo, we are also missing iKwebsocket.send() to send data, and iKwebsocket.onmessage event to receive data.
+	+\ iK see next .html file for those zzzzzzzzzzzzzzzzzzzzfinish offfffffffffffffffffffffffff
+5+
+*/
 
 
  /*OP */

@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>XX $.ajax() GET</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -45,37 +45,26 @@
 'use strict';
 
 
-/*FETCH STRUCTURE*/
-async function iKasyncFunction() {
-	try {
-		return await fetch("https://httpbin.org/get", {
-			method: "GET",
-			headers: {
-				"Content-Type": "applcation/json"
-			},
-			body: undefined
-		})
-			.then( iKob => {
-				console.log(iKob);
-				return iKob;
-			})
-			.then(iKfet => iKfet.json() )
-			.then( x => x.formData() )
-			.then( x => x.blob() )
-			.then( x => URL.createObjectURL(x) )
-			.then( iKurl => `<img src="${iKurl}">` )
-			.then( x => console.log(x) )
-			.then( x => document.write(x) )
-			.then( iKfetRes => IK.printD(iKfetRes) )
-
-	} catch(iKerrorPar) {
-		throw new Error( "iKreject333 " + iKerrorPar )
-	};
-}; /*END iKasyncFunction */
-
-const ik = iKasyncFunction();
-//	IK.printD(ik);
-//	ik.then( x => IK.printD(x) )
+/**/
+$.ajax(
+	"http://api.open-notify.org/astros.json",
+	{
+		method: "GET",
+		dataType: "json",
+		success: function(response, status, xhr) {
+			IK.printD( "iKresolved" )
+			IK.printD(status)
+			IK.printD(xhr)
+			IK.printD(response)
+		},
+		error: function(xhr, status, statusText) {
+			IK.printD( "iKrejected" )
+			IK.printD(xhr)
+			IK.printD(status)
+			IK.printD(statusText)
+		}
+	}
+);
 
 
  /*OP */

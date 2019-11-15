@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>XX fetch post</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -32,7 +32,7 @@
 
 
 <!-- -->
-<input type="file" value="images/ali.jpg" id="fileinput"/>
+
 
 <!---------------------- /main /////////////////////////-->
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -45,38 +45,20 @@
 'use strict';
 
 
-/*uploading a files via post or put (from online)*********/
-// Select your input type file and store it in a variable
-const input = document.getElementById('fileinput');
+/**/
+const iKobject1 = {iKoProperty1: "iKoV1", iKoProperty2: "iKoV2", iKoProperty3: "iKoV3"};
 
-// This will upload the file after having read it
-const upload = (file) => {
-  fetch('https://httpbin.org/post', { // Your POST endpoint
-    method: 'POST',
-    headers: {
-      // Content-Type may need to be completely **omitted**
-      // or you may need something
-      "Content-Type": "image/jpeg"
-    },
-    body: file // This is your file object
-  }).then(
-    response => response.json() // if the response is a JSON object
-  ).then(
-    success => console.log(success) // Handle the success response object
-  ).catch(
-    error => console.log(error) // Handle the error response object
-  );
-};
+fetch("https://jsonplaceholder.typicode.com/posts", {
+	method: "POST",
+	headers: {
+		["Content-Type"]: "application/json"
+	},
+	body: JSON.stringify(iKobject1)
+}) /*END fetch() */
+	.then( iKresponseBody => iKresponseBody.json() )
+	.then( iKresponseBody => IK.printD( iKresponseBody ) )
 
-// Event handler executed when a file is selected
-const onSelectFile = () => upload(input.files[0]);
 
-// Add a listener on your input
-// It will be triggered when a file will be selected
-input.addEventListener('change', onSelectFile, false);
-	
-	
-	
  /*OP */
 /***** d */
 /*--------------------- /script /////////////////////////*/ /* 

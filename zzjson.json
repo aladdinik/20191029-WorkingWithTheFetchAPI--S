@@ -1,18 +1,18 @@
 [
   {
-   "name": "alpha",
+   "name": "Alpha",
    "inoffice": false
   },
   {
-   "name": "bravo",
+   "name": "Bravo",
    "inoffice": true
   },
   {
-   "name": "charlie",
+   "name": "Charlie",
    "inoffice": true
   },
   {
-   "name": "delta",
+   "name": "Delta",
    "inoffice": false
   }
 ]

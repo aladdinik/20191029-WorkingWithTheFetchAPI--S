@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>XX xhr object POST</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -46,6 +46,23 @@
 
 
 /**/
+const iKxhr = new XMLHttpRequest();
+
+iKxhr.open("POST", "https://httpbin.org/post");
+
+iKxhr.responseType = "json";
+
+iKxhr.send( JSON.stringify({iKprop1: "iKvalue1"}) );
+
+iKxhr.onload = function() {
+	IK.printD( iKxhr.response );
+};
+
+iKxhr.timeout = 10000;
+
+iKxhr.ontimeout = function() {
+	IK.printD( "iKtimeout" );
+};
 
 
  /*OP */

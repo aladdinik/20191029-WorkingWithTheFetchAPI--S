@@ -53,38 +53,38 @@
 'use strict';
 
 
-/*showing live attendance every 3 seconds using polling */
-/* iK from previous project I did but with polling. */
+/*showing live attendance every 5 seconds using regular polling / persistent connection */
+/* iK from previous project I did but with polling.
++\ regular polling is the server side not seting up the pending connection, so therefore you control how long the self function callback triggers.
+	+\ it would be much better if the server side had set up pending connection to make this long polling, as it will not be too taxing on performance. */
 async function iKpolling() {
 	const iKfetch = await fetch("zzjson.json");
 	const iKjson = await iKfetch.json();
 	let iKulist = "<ul>";
 
-
-	for (let index of iKjson) {
-		if (index.inoffice === true) {
-			iKulist += `<li class='in'>${index.name}</li>`;
+	for (let iKindex of iKjson) {
+		if (iKindex.inoffice === true) {
+			iKulist += `<li class='in'>${iKindex.name}</li>`;
 		} else {
-			iKulist += `<li class='out'>${index.name}</li>`;
+			iKulist += `<li class='out'>${iKindex.name}</li>`;
 		};
 	}; /*END for loop */
 
 	iKulist += "</ul>";
 	iKdiv_id.innerHTML = iKulist;
 
-
-	await new Promise(resolve => setTimeout(resolve, 3000)); /*1+*/
-
+	await new Promise(resolve => setTimeout(resolve, 5000)); /*1+*/
 	console.log(iKjson);	/*2+*/
-
 	await iKpolling()	/*3+*/
 }; /*END function iKpolling */
 
 iKpolling();
 
-/*1+ causes 3 seconds before going to the iKpolling() re-calling the callback function.
-2+ not necessary, just to show update every 3 seconds working.
-3+ and the cycle restarts again. And if there is any update on the json url file, it will show the changes after 3 seconds. */
+/*1+ it waits 5 seconds before it recalls iKpolling() callback function.
+1+ without 5 seconds, it will be a constant stream of http request.
+2+ not necessary, just wanted to show update every 5 seconds working.
+3+ the callback function restarts the cycle again. And if there is any update on the json url file, it will show the changes in 5 seconds.
++\ also I could have added another iKpolling() inside an if statement if the connection status was not 200 */
 
 
  /*OP */

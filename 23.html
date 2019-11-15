@@ -45,43 +45,81 @@
 'use strict';
 
 
-/*long polling / callback within function itself */
+/*long polling / however without the server side setup than it will become regular polling / callback within function itself / persistent connection */
 /* source: javascript.info .
-+\ apparently good at keeping persistent connection.
++\ imagine this is a low traffic chat room. so disregard many codes that is needed such as form input text / url / etc, as this is just for your understanding of the infrastructure.
++\ long polling or regular polling is about keeping a constant connection with the url server.
++\ this would be long polling if the server side has setup a pending connection. And they will only return the response object until they receive a message (eg. from the other person).
+	+\ once the browser receive the response object, it will resend the same request, and the cycles continues on until the users are finish.
++\ But since we are not able to use a server side to create a pending request, this demo of long polling become a regular polling, which means we set the number of times the request is send out.
+	+\ since we did not set a timer (setTimeout() ) on the http request being send out, the http request is a constant stream of http request.
+		+\ which is usually bad for performance and is not recommended for big task. so long polling is usually best.
+			+\ long polling is best when there is low traffic, such as waiting for your emails, instead of high traffic like back and forth conversation in chat rooms.
+
 +\ A sketch of client-side subscribe function that makes long requests.
-	+\ imagine this is a chat room.
-		+\ but a lot is missing, however this is a very simple example of the structure required for constant connection.
 +\ notice it is simply the callback function calling within itself */
-async function subscribe() {
-	let response = await fetch("https://httpbin.org/get"); /*1+*/ /*2+*/
 
-	if (response.status == 502) {
-		/* Status 502 is a connection timeout error, may happen when the connection was pending for too long, and the remote server or a proxy closed it */
-		/* let's reconnect */
-		await subscribe();
-	} else if (response.status != 200) {
-		/* An error - let's show it */
-/*		showMessage(response.statusText);	*/ /*1+*/
-		IK.printD(response.statusText); /*1+*/
-		/* Reconnect in one second */
-		await new Promise(resolve => setTimeout(resolve, 1000)); /*3+*/
-		await subscribe();
-	} else {
-		/* Get and show the message */
-		let message = await response.text();
-/*		showMessage(message);	*/ /*1+*/
-		IK.printD("showMessage") /*1+*/
-		/* Call subscribe() again to get the next message */
-		await subscribe();
+/* Sending messages, a simple POST */
+function PublishForm(form, url) { /*1+*/
+
+ 	function sendMessage(message) {
+		fetch(url, {
+			method: 'POST',
+			body: message
+		});
 	}
-};
 
-subscribe();
+	form.onsubmit = function() {
+		let message = form.message.value;
+		if (message) {
+			form.message.value = '';
+			sendMessage(message);
+		}
+		return false;
+	};
+}; /*END function PublishForm */
 
-/*1+ iK tweaked here.
-2+ iK perhaps you could code their message in the query string as a way to send your message.
-	+\ however it will not be secure, so not recommended. use the body payload instead.
-3+ not sure why it needs to wait for 1 second to reconnect? */
+
+/* Receiving messages with long polling */
+function SubscribePane(elem, url) { /*1+*/
+
+	function showMessage(message) {
+		let messageElem = document.createElement('div');
+		messageElem.append(message);
+		elem.append(messageElem);
+	}
+
+	async function subscribe() {
+		let response = await fetch(url);
+
+		if (response.status == 502) { /*2+*/
+			/* let's reconnect */
+			await subscribe();
+		}
+		else if (response.status != 200) {
+			/* Show Error to user*/
+			showMessage(response.statusText);
+			/* Reconnect in one second */
+			await new Promise(resolve => setTimeout(resolve, 1000)); /*3+*/
+			await subscribe();
+		}
+		else {
+			/* Get and show the message */
+			let message = await response.text();
+			showMessage(message);
+			/* Call subscribe() again to get the next message */
+			await subscribe();
+		};
+	}; /*END async function subscribe */
+
+	subscribe();
+}; /*END function SubscribePane */
+
+/*1+ the callback was found in their html page using another <script>.
+1+ iK I also tested out with a working url with minor tweaks, and without a server side pending the connection, you only get a constant stream on http request, as long it is always 200 status.
+2+ Status 502 is a connection timeout error, may happen when the connection was pending for too long, and the remote server or a proxy closed it
+3+ not sure why it needs to wait for 1 second to reconnect?
++\ just to note, long polling is only good if chats are not often, but if you require constant stream chat than it is best to use other methods. */
 
 
  /*OP */

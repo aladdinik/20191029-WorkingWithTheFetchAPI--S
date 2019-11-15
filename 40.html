@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>XX websocket</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -32,6 +32,17 @@
 
 
 <!-- -->
+<!-- form elements -->
+<form id="iKformId">
+	<input id="iKinputTextId" type="text" name="iKtextName1" value="iKtextValue1">
+	<input id="iKsubmitId" type="submit">
+</form>
+
+	<button type="button" id="iKbuttonClose">stop close</button>
+	
+	<button type="button" id="iKbuttonFetch">fetchsomething</button>
+	
+	<div id="iKdiv"></div>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -46,23 +57,47 @@
 
 
 /**/
-const iKxhr = new XMLHttpRequest();
+const webS = new WebSocket("wss://echo.websocket.org");
 
-iKxhr.open("POST", "https://httpbin.org/post");
+const iKobject1 = {iKoProperty1: "iKoV1", iKoProperty2: "iKoV2", iKoProperty3: "iKoV3"};
 
-iKxhr.responseType = "json";
+webS.onopen = function() {
+	iKdiv.append("iKopen")
+	console.log(webS.protocol)
+	webS.send("iKstringy")
+}
 
-iKxhr.send( JSON.stringify({iKprop1: "iKvalue1"}) );
+iKformId.onsubmit = function(event) {
+	event.preventDefault();
+	webS.send(iKinputTextId.value)
+	iKinputTextId.value = "";
+}
 
-iKxhr.onload = function() {
-	IK.printD( iKxhr.response );
+webS.onmessage = function(event) {
+	iKdiv.append(event.data)
+	console.log(webS)
+//	webS.send(123)
+}
+
+iKbuttonClose.onclick = function(event) {
+	webS.close();
+	console.log("iKclose succeeded");
+	console.log(webS.protocol)
 };
 
-iKxhr.timeout = 10000;
+iKbuttonFetch.onclick = function(event) {
+	fetch("https://httpbin.org/get")
+		.then(x => {
+			console.log(x);
+			return x;
+		})
+		.then(x => 
+			console.log(webS.protocol)
+		 )
 
-iKxhr.ontimeout = function() {
-	IK.printD( "iKtimeout" );
 };
+
+console.log(webS)
 
 
  /*OP */
