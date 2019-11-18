@@ -9,19 +9,12 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>24</title>
+    <title></title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
 
-/*display colour of attendance*/
-	.in {
-		background-color: green;
-	}
-
-	.out {
-		background-color: red;
-	}
+/**/
 
 
 /*---------------------- /style //////////////////////////*/
@@ -38,8 +31,7 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- ul list container-->
-<div id="iKdiv_id"></div>
+<!-- -->
 
 
 <!---------------------- /main /////////////////////////-->
@@ -47,44 +39,61 @@
 <script src="https://unpkg.com/popper.js@1.16.0/dist/umd/popper.min.js" type="text/javascript"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelement-and-player.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js" integrity="sha256-G7A4JrJjJlFqP0yamznwPjAApIKPkadeHfyIwiaa9e0=" crossorigin="anonymous"></script>
+<script src="zIK/HS07mockServerEventsource/mockevent.js"></script>
 <script src="zIK/03JS/kiK.js" type="text/javascript"></script>
 <script>
 /* + + + + + + + + + + + SCRIPT --------------------------*/
 'use strict';
 
 
-/*showing live attendance every 5 seconds using regular polling / persistent connection */
-/* iK from previous project I did but with polling.
-+\ regular polling is the server side not seting up the pending connection, so therefore you control how long the self function callback triggers.
-	+\ it would be much better if the server side had set up pending connection to make this long polling, as it will not be too taxing on performance. */
-async function iKpolling() {
-	const iKfetch = await fetch("zzjson.json");
-	const iKjson = await iKfetch.json();
-	let iKulist = "<ul>";
+/*server-sent event / EventSource / persistent connection */
 
-	for (let iKindex of iKjson) {
-		if (iKindex.inoffice === true) {
-			iKulist += `<li class='in'>${iKindex.name}</li>`;
-		} else {
-			iKulist += `<li class='out'>${iKindex.name}</li>`;
-		};
-	}; /*END for loop */
+/* Instantiate a `MockeEvent` ----------*/
+var mockEvent = new MockEvent({
+    url: '/iKpathName',
+    setInterval: 1300,
+    responses: [
+        {name: 'message', data: 'iKeventSourceV1'},
+        {name: 'iKcustomEventType1', data: 'iKeventSourceV2'},
+        {name: 'iKcustomEventType2', data: 'iKeventSourceV3'},
+        {name: 'iKcustomEventType3', data: 'iKeventSourceV4'},
+        {name: 'iKcustomEventType4', data: 'iKeventSourceV5'}
+    ]
+});
 
-	iKulist += "</ul>";
-	iKdiv_id.innerHTML = iKulist;
 
-	await new Promise(resolve => setTimeout(resolve, 5000)); /*1+*/
-	console.log(iKjson);	/*2+*/
-	iKpolling()	/*3+*/
-}; /*END function iKpolling */
+/* Instantiate an `EventSource` ---------- */
+const iKeventSource = new EventSource("/iKpathName");
 
-iKpolling();
+/* Listening for open and error events */
+iKeventSource.onopen = function(event) {
+	console.log("iKeventsource CONNECTION IS OPEN", event)
+};
 
-/*1+ it waits 5 seconds before it recalls iKpolling() callback function.
-1+ without 5 seconds, it will be a constant stream of http request.
-2+ not necessary, just wanted to show update every 5 seconds working.
-3+ the callback function restarts the cycle again. And if there is any update on the json url file, it will show the changes in 5 seconds.
-+\ also I could have added another iKpolling() inside an if statement if the connection status was not 200 */
+iKeventSource.onerror = function(event){
+	console.log("iKeventsource CONNECTION ERROR", event.message)
+};
+
+
+/* Listening to specific event names and handling them */
+iKeventSource.addEventListener(
+	'first_tweet',
+	function(event){
+		console.log('first tweet1', event)
+	},
+	false
+);
+
+
+
+
+/*1+
+2+
+3+
+4+
+5+
+*/
 
 
  /*OP */

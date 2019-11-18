@@ -1,3 +1,13 @@
+/*source: eloyz/mockevent (github).
++\ I have not adjusted the main codes.
+	+\ iK however I have also included at the bottom the extra code that came with it.
+		+\ it is commented out because I did not want to trigger eventsource everytime I use a new html file, especially if I do not want to use eventsource.
+			+\ iK if you want to use eventsource than copy and paste the bottom commented codes to your main script and make adjustment if necessary.
+				+\ BIM you will also need the underscore.js file too for it to work.
+
++\ iK this is a mock evensource, you would not use this file in the real world.
+	+\ this file is only if you want to practice incoming eventsource.
+		+\ it will send eventsource like a server would do in the real world. */
 (function(window, undefined){
 
     window.MockEventGlobals = {
@@ -264,3 +274,12 @@
     };
 
 })(window);
+
+
+
+/* IK COPY AND PASTE THIS CODES TO YOUR MAIN SCRIPT IF YOU WANT TO USE EVENTSOURCE OBJECT */
+/*
+
+*/
+
+

@@ -115,7 +115,7 @@ function SubscribePane(elem, url) { /*1+*/
 	subscribe();
 }; /*END function SubscribePane */
 
-/*1+ the callback was found in their html page using another <script>.
+/*1+ the callback was found and triggered in their html page using another <script>.
 1+ iK I also tested out with a working url with minor tweaks, and without a server side pending the connection, you only get a constant stream on http request, as long it is always 200 status.
 2+ Status 502 is a connection timeout error, may happen when the connection was pending for too long, and the remote server or a proxy closed it
 3+ not sure why it needs to wait for 1 second to reconnect?

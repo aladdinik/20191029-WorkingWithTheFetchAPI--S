@@ -31,18 +31,19 @@
 <!--+ + + + + + + + + + + MAIN --------------------------->
 
 
-<!-- -->
 <!-- form elements -->
 <form id="iKformId">
 	<input id="iKinputTextId" type="text" name="iKtextName1" value="iKtextValue1">
 	<input id="iKsubmitId" type="submit">
 </form>
 
-	<button type="button" id="iKbuttonClose">stop close</button>
-	
-	<button type="button" id="iKbuttonFetch">fetchsomething</button>
-	
-	<div id="iKdiv"></div>
+<button type="button" id="iKbuttonOpenId">Open Connection</button>
+
+<button type="button" id="iKbuttonCloseId">Close Connection</button>
+
+<button type="button" id="iKbuttonFetchId">Fetch() GET method</button>
+
+<div id="iKdivAppendId"></div>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -62,7 +63,7 @@ const webS = new WebSocket("wss://echo.websocket.org");
 const iKobject1 = {iKoProperty1: "iKoV1", iKoProperty2: "iKoV2", iKoProperty3: "iKoV3"};
 
 webS.onopen = function() {
-	iKdiv.append("iKopen")
+	iKdivAppendId.append("iKopen")
 	console.log(webS.protocol)
 	webS.send("iKstringy")
 }
@@ -74,18 +75,18 @@ iKformId.onsubmit = function(event) {
 }
 
 webS.onmessage = function(event) {
-	iKdiv.append(event.data)
+	iKdivAppendId.append(event.data)
 	console.log(webS)
 //	webS.send(123)
 }
 
-iKbuttonClose.onclick = function(event) {
+iKbuttonCloseId.onclick = function(event) {
 	webS.close();
 	console.log("iKclose succeeded");
 	console.log(webS.protocol)
 };
 
-iKbuttonFetch.onclick = function(event) {
+iKbuttonFetchId.onclick = function(event) {
 	fetch("https://httpbin.org/get")
 		.then(x => {
 			console.log(x);
