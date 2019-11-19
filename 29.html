@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title></title>
+    <title>29</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -32,6 +32,7 @@
 
 
 <!-- -->
+	<button id="iKbutton">close</button>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -47,18 +48,18 @@
 'use strict';
 
 
-/*server-sent event / EventSource / persistent connection */
+/*server-sent event / EventSource / persistent connection / my minor tweaks to make it mock event object more readable to me for future use */
 
 /* Instantiate a `MockeEvent` ----------*/
-var mockEvent = new MockEvent({
-    url: '/iKpathName',
-    setInterval: 1300,
+const mockEvent = new MockEvent({
+    url: '/iKpathName',	/*iKadjustable*/
+    setInterval: 1300,	/*iKadjustable*/
     responses: [
-        {name: 'message', data: 'iKeventSourceV1'},
+        {name: 'message', data: 'iKeventSourceV1'},	/*iKadjustable*//*1+*/
         {name: 'iKcustomEventType1', data: 'iKeventSourceV2'},
-        {name: 'iKcustomEventType2', data: 'iKeventSourceV3'},
+        {name: 'iKcustomEventType1', data: 'iKeventSourceV3'}, /*2+*/
         {name: 'iKcustomEventType3', data: 'iKeventSourceV4'},
-        {name: 'iKcustomEventType4', data: 'iKeventSourceV5'}
+        {name: 'iKcustomEventType1', data: 'iKeventSourceV5'}
     ]
 });
 
@@ -67,33 +68,49 @@ var mockEvent = new MockEvent({
 const iKeventSource = new EventSource("/iKpathName");
 
 /* Listening for open and error events */
-iKeventSource.onopen = function(event) {
-	console.log("iKeventsource CONNECTION IS OPEN", event)
-};
+iKeventSource.onopen = event => console.log("iKeventsource CONNECTION IS OPEN", event);
 
-iKeventSource.onerror = function(event){
-	console.log("iKeventsource CONNECTION ERROR", event.message)
-};
-
+iKeventSource.onerror = event => console.log("iKeventsource CONNECTION ERROR", event.message); /*3+*/
 
 /* Listening to specific event names and handling them */
+iKeventSource.addEventListener(		/*iKadjustable*/
+	'message',		/*4+*/
+	event => console.log( event.type, event.data, event ), /*5+*/
+	false	/*6+*/
+);
+
 iKeventSource.addEventListener(
-	'first_tweet',
-	function(event){
-		console.log('first tweet1', event)
-	},
+	"iKcustomEventType1",	/*7+*/
+	event => console.log( event.type, event.data, event ),
 	false
 );
 
+iKeventSource.addEventListener(
+	"iKcustomEventType3",
+	event => console.log( event.type, event.data, event ),
+	false
+);
+/*OP
+	"message , iKeventSourceV1" , event object
+	"iKcustomEventType1 , iKeventSourceV2" , event object
+	"iKcustomEventType1 , iKeventSourceV3" , event object
+	"iKcustomEventType3 , iKeventSourceV4" , event object
+	"iKcustomEventType1 , iKeventSourceV5" , event object */
 
 
-
-/*1+
-2+
-3+
-4+
-5+
-*/
+/*1+ Think of name: as the custom type of event the client will have to use if they want to get the .data of the eventsource.
+1+ iK I used "message" because I think normally if the server did not set up the event type, than you would use .onmessage / "message" (.addEventListener) .
+	+\ iK however beware that in this case you are not allowed to use .onmessage event listener.
+		+\ iK but you can use .addEventListenr("message", ...);
+2+ notice there is 2 "iKcustomEventType1" . but server will still send repeated event type  to the client synchronously with each separate value.
+3+ the error event also collects if the user closes the connection with .close() .
+	+\ as there seem to be no close event for the eventsource object.
+4+ set the type of event it requires from the server.
+5+ IK however I notice if I would use IK.printD() or document.write(), it will prevent the other iKeventSource.addEventListener() from running. And I do not know why?
+	+\ perhap you should push the values into a new array or something as it will work that way.
+6+ not necessary, it bubbling/capturing.
+7+ will call all the "iKcustomEventType1", but in the synchronous order of the server layout. 
++\ just remember you can use the .close() method to close the connection of the eventsource object. */
 
 
  /*OP */

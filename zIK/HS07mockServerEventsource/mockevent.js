@@ -1,4 +1,6 @@
 /*source: eloyz/mockevent (github).
++\ iK copy and paste the bottom part of the codes to your script for 5 eventsource object.
+
 +\ I have not adjusted the main codes.
 	+\ iK however I have also included at the bottom the extra code that came with it.
 		+\ it is commented out because I did not want to trigger eventsource everytime I use a new html file, especially if I do not want to use eventsource.
@@ -276,10 +278,73 @@
 })(window);
 
 
-
-/* IK COPY AND PASTE THIS CODES TO YOUR MAIN SCRIPT IF YOU WANT TO USE EVENTSOURCE OBJECT */
-/*
-
-*/
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+/*%%%%%%%%%%%%%%%%%%%%%%%%%% IK %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 
+/* IK COPY AND PASTE THE COMMENTED (//) CODES TO YOUR MAIN SCRIPT IF YOU WANT TO USE EVENTSOURCE OBJECT */
+/*iK I made adjustment so it would be quicker for me to understand. */
+
+///* Instantiate a `MockeEvent` ----------*/
+//const mockEvent = new MockEvent({
+//    url: '/iKpathName',	/*iKadjustable*/
+//    setInterval: 1300,	/*iKadjustable*/
+//    responses: [
+//        {name: 'message', data: 'iKeventSourceV1'},	/*iKadjustable*//*1+*/
+//        {name: 'iKcustomEventType1', data: 'iKeventSourceV2'},
+//        {name: 'iKcustomEventType1', data: 'iKeventSourceV3'}, /*2+*/
+//        {name: 'iKcustomEventType3', data: 'iKeventSourceV4'},
+//        {name: 'iKcustomEventType1', data: 'iKeventSourceV5'}
+//    ]
+//});
+//
+//
+///* Instantiate an `EventSource` ---------- */
+//const iKeventSource = new EventSource("/iKpathName");
+//
+///* Listening for open and error events */
+//iKeventSource.onopen = event => console.log("iKeventsource CONNECTION IS OPEN", event);
+//
+//iKeventSource.onerror = event => console.log("iKeventsource CONNECTION ERROR", event.message); /*3+*/
+//
+///* Listening to specific event names and handling them */
+//iKeventSource.addEventListener(		/*iKadjustable*/
+//	'message',		/*4+*/
+//	event => console.log( event.type, event.data, event ), /*5+*/
+//	false	/*6+*/
+//);
+//
+//iKeventSource.addEventListener(
+//	"iKcustomEventType1",	/*7+*/
+//	event => console.log( event.type, event.data, event ),
+//	false
+//);
+//
+//iKeventSource.addEventListener(
+//	"iKcustomEventType3",
+//	event => console.log( event.type, event.data, event ),
+//	false
+//);
+
+/*OP
+	"message , iKeventSourceV1" , event object
+	"iKcustomEventType1 , iKeventSourceV2" , event object
+	"iKcustomEventType1 , iKeventSourceV3" , event object
+	"iKcustomEventType3 , iKeventSourceV4" , event object
+	"iKcustomEventType1 , iKeventSourceV5" , event object */
+
+
+/*1+ Think of name: as the custom type of event the client will have to use if they want to get the .data of the eventsource.
+1+ iK I used "message" because I think normally if the server did not set up the event type, than you would use .onmessage / "message" (.addEventListener) .
+	+\ iK however beware that in this case you are not allowed to use .onmessage event listener.
+		+\ iK but you can use .addEventListenr("message", ...);
+2+ notice there is 2 "iKcustomEventType1" . but server will still send repeated event type  to the client synchronously with each separate value.
+3+ the error event also collects if the user closes the connection with .close() .
+	+\ as there seem to be no close event for the eventsource object.
+4+ set the type of event it requires from the server.
+5+ IK however I notice if I would use IK.printD() or document.write(), it will prevent the other iKeventSource.addEventListener() from running. And I do not know why?
+	+\ perhap you should push the values into a new array or something as it will work that way.
+6+ not necessary, it bubbling/capturing.
+7+ will call all the "iKcustomEventType1", but in the synchronous order of the server layout. 
++\ just remember you can use the .close() method to close the connection of the eventsource object. */

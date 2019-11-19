@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>24</title>
+    <title>24 showing live attendance every 5 seconds using regular polling / persistent connection</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -74,16 +74,15 @@ async function iKpolling() {
 	iKdiv_id.innerHTML = iKulist;
 
 	await new Promise(resolve => setTimeout(resolve, 5000)); /*1+*/
-	console.log(iKjson);	/*2+*/
-	iKpolling()	/*3+*/
+	console.log(iKjson);
+	iKpolling()			/*2+*/
 }; /*END function iKpolling */
 
 iKpolling();
 
 /*1+ it waits 5 seconds before it recalls iKpolling() callback function.
 1+ without 5 seconds, it will be a constant stream of http request.
-2+ not necessary, just wanted to show update every 5 seconds working.
-3+ the callback function restarts the cycle again. And if there is any update on the json url file, it will show the changes in 5 seconds.
+2+ the callback function restarts the cycle again. And if there is any update on the json url file, it will show the changes in 5 seconds.
 +\ also I could have added another iKpolling() inside an if statement if the connection status was not 200 */
 
 

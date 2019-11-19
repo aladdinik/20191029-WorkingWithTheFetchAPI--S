@@ -63,22 +63,22 @@ console.log(iKwebsocket);
 console.log(window.location);	/*1+*/
 
 /*sending data */
-document.forms.iKformId.onsubmit = function(event) { /*2+*/
+document.forms.iKformId.onsubmit = function(event) {
 	event.preventDefault();
-	iKwebsocket.send( iKinputTextId.value ); /*3+*/
+	iKwebsocket.send( iKinputTextId.value ); /*2+*/
 	console.log(iKwebsocket);
 	console.log(window.location); /*1+*/
 };
 
 /*receiving data / .data */
-iKwebsocket.addEventListener("message", function(event) { /*4+*/
-	iKdivAppendId.append(event.data);	/*5+*/
-	console.log(event);	/*6+*/
+iKwebsocket.addEventListener("message", function(event) { /*3+*/
+	iKdivAppendId.append(event.data);	/*4+*/
+	console.log(event);	/*5+*/
 });
 
 /*close the connection */
 iKbuttonCloseId.addEventListener("click", event => {
-	iKwebsocket.close();	/*7+*/
+	iKwebsocket.close();	/*6+*/
 	iKdivAppendId.append("iK .close()");
 });
 
@@ -86,17 +86,16 @@ iKbuttonCloseId.addEventListener("click", event => {
 /*1+ despite websocket being connected and using ws/wss protocol, the whole document page is still used in http/https no matter what event take place.
 	+\ the websocket and url server are using their own exclusive protocol.
 	+\ therefore you can still use fetch() or other asynchronous task using http/https as usual.
-2+ you can use either on.. event or .addEventListener() to perform your websocket.
-3+ data will be posted to the url server.
-4+ the message event is like the GET method, as it will collect any new data added to the server.
+2+ data will be posted to the url server.
+3+ the message event is like the GET method, as it will collect any new data added to the server.
 	+\ it is almost instantanous, so eg. the person we are chatting to sends a message to the server, and we collect the message from the server and append it for us to see.
-4+ you could also use .onmessage as the event function.
-5+ event parameter is required so that we can access the property .data in the message event object to collect the new data which is added by the server.
+3+ you can use either on.. event or .addEventListener() to perform your websocket.
+4+ event parameter is required so that we can access the property .data in the message event object to collect the new data which is added by the server.
 	+\ iKBIM note that you will only get your own data back because we do not have anyone on the other side of the server.
 		+\ iK however I am not sure how yet how to distinguish your message and the other person message as it both uses the data property, perhaps the me or the server needs to id the message somehow.
-5+ .append("iKstring"); is a method that will append string value to the element node. More convenient compare to the other methods.
-6+ you can see all the properties of the message event object.
-7+ .close() will disconnect the websocket connection. */
+4+ .append("iKstring"); is a method that will append string value to the element node. More convenient compare to the other methods.
+5+ you can see all the properties of the message event object.
+6+ .close() will disconnect the websocket connection. */
 
 
  /*OP */

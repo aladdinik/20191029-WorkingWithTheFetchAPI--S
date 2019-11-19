@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>23</title>
+    <title>23 long polling / however without the server side setup than it will become regular polling / callback within function itself / persistent connection</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -48,11 +48,11 @@
 /*long polling / however without the server side setup than it will become regular polling / callback within function itself / persistent connection */
 /* source: javascript.info .
 +\ imagine this is a low traffic chat room. so disregard many codes that is needed such as form input text / url / etc, as this is just for your understanding of the infrastructure.
-+\ long polling or regular polling is about keeping a constant connection with the url server.
++\ long polling or regular polling is about the client-side keeping a constant connection with the url server-side.
 +\ this would be long polling if the server side has setup a pending connection. And they will only return the response object until they receive a message (eg. from the other person).
 	+\ once the browser receive the response object, it will resend the same request, and the cycles continues on until the users are finish.
 +\ But since we are not able to use a server side to create a pending request, this demo of long polling become a regular polling, which means we set the number of times the request is send out.
-	+\ since we did not set a timer (setTimeout() ) on the http request being send out, the http request is a constant stream of http request.
+	+\ since we did not set a timer (setTimeout() ) on the http request being send out, the http request is a constant stream of http request (providing it was triggered).
 		+\ which is usually bad for performance and is not recommended for big task. so long polling is usually best.
 			+\ long polling is best when there is low traffic, such as waiting for your emails, instead of high traffic like back and forth conversation in chat rooms.
 
