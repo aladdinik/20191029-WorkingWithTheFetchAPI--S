@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>27</title>
+    <title>27 demo of what websocket could look like when put together</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -61,7 +61,7 @@ iKbuttonOpenId.onclick = event => {
 	const iKwebsocket = new WebSocket("wss://echo.websocket.org"); /*1+*/
 
 
-	/***** if websocket connection succeeds let user know */
+	/***** if websocket connection succeeds, let user know */
 	iKwebsocket.onopen = () => {
 		console.log(iKwebsocket);
 
@@ -74,9 +74,8 @@ iKbuttonOpenId.onclick = event => {
 
 
 	/***** if error occurs in connection */
-	iKwebsocket.onerror = () => {
-		Error("iKerror");
-		console.log(iKwebsocket);
+	iKwebsocket.onerror = event => {
+		console.error( Error("iKerror"), iKwebsocket, event );
 
 		iKdivAppendId.innerHTML = "<div>iK Websocket ERROR</div>";
 
@@ -102,12 +101,10 @@ iKbuttonOpenId.onclick = event => {
 
 
 	/***** close websocket connection */
-	iKbuttonCloseId.onclick = () => {
-		iKwebsocket.close();
-	};
+	iKbuttonCloseId.onclick = () => iKwebsocket.close(1000, "iK Chatroom Closed"); /*2+*/
 
 	iKwebsocket.onclose = event => {
-		console.log(iKwebsocket);
+		console.log(event);		/*3+*/
 
 		iKdivAppendId.innerHTML += "<div>iK Websocket server CLOSED</div>";
 
@@ -117,7 +114,13 @@ iKbuttonOpenId.onclick = event => {
 	}; /*END iKwebsocket.onclose */
 }; /*END iKbuttonOpenId.onclick */
 
-/*1+ websocket method/property/event must be roughly the same scope within the WebSocket() click event for this to work smoothly. */
+/*1+ websocket method/property/event must be roughly the same scope within the WebSocket() click event for this to work smoothly.
+2+ 1000 is like the status code for close event. It means it close normally.
+	+\ the second argument is you entering you the connection closed.
+	+\ both arguments are optional.
+3+ the event is a close event.
+	+\ you can access the .close() arguments through it.
+		+\ you can also do some if statement if you got disconnected with a different status. */
 
 
  /*OP */

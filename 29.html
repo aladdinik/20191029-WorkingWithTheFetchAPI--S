@@ -32,7 +32,7 @@
 
 
 <!-- -->
-	<button id="iKbutton">close</button>
+	<button id="iKbuttonCloseId">close</button>
 
 
 <!---------------------- /main /////////////////////////-->
@@ -68,19 +68,21 @@ const mockEvent = new MockEvent({
 const iKeventSource = new EventSource("/iKpathName");
 
 /* Listening for open and error events */
-iKeventSource.onopen = event => console.log("iKeventsource CONNECTION IS OPEN", event);
+iKeventSource.onopen = event => console.log("iKeventsource CONNECTION IS OPEN", event, iKeventSource); /*3+*/
 
-iKeventSource.onerror = event => console.log("iKeventsource CONNECTION ERROR", event.message); /*3+*/
+iKeventSource.onerror = event => console.log("iKeventsource CONNECTION ERROR", event); /*4+*/
+
+iKbuttonCloseId.onclick = () => iKeventSource.close(); /*5+*/
 
 /* Listening to specific event names and handling them */
 iKeventSource.addEventListener(		/*iKadjustable*/
-	'message',		/*4+*/
-	event => console.log( event.type, event.data, event ), /*5+*/
-	false	/*6+*/
+	'message',		/*6+*/
+	event => console.log( event.type, event.data, event ), /*7+*/
+	false	/*8+*/
 );
 
 iKeventSource.addEventListener(
-	"iKcustomEventType1",	/*7+*/
+	"iKcustomEventType1",	/*9+*/
 	event => console.log( event.type, event.data, event ),
 	false
 );
@@ -103,13 +105,18 @@ iKeventSource.addEventListener(
 	+\ iK however beware that in this case you are not allowed to use .onmessage event listener.
 		+\ iK but you can use .addEventListenr("message", ...);
 2+ notice there is 2 "iKcustomEventType1" . but server will still send repeated event type  to the client synchronously with each separate value.
-3+ the error event also collects if the user closes the connection with .close() .
+3+ iK you can get all the server data prior using the open event, and inserting the iKeventSource.handler.responses.
+	+\ iK I do not know if this is exclusive to the mock eventsource or this is the norms.
+3+ iK bewary as .addEventListener does not seem to work with open event, and the same for error event too.
+4+ the error event also collects if the user closes the connection with .close() .
 	+\ as there seem to be no close event for the eventsource object.
-4+ set the type of event it requires from the server.
-5+ IK however I notice if I would use IK.printD() or document.write(), it will prevent the other iKeventSource.addEventListener() from running. And I do not know why?
+5+ .close() will stop anymore server events coming through.
+	+\ iK strangely it will straight to error event, close event does not seem to respond under it.
+6+ set the type of event it requires from the server.
+7+ IK however I notice if I would use IK.printD() or document.write(), it will prevent the other iKeventSource.addEventListener() from running. And I do not know why?
 	+\ perhap you should push the values into a new array or something as it will work that way.
-6+ not necessary, it bubbling/capturing.
-7+ will call all the "iKcustomEventType1", but in the synchronous order of the server layout. 
+8+ not necessary, it bubbling/capturing.
+9+ will call all the "iKcustomEventType1", but in the synchronous order of the server layout. 
 +\ just remember you can use the .close() method to close the connection of the eventsource object. */
 
 
