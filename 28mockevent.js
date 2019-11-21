@@ -1,7 +1,7 @@
 /*source: eloyz/mockevent (github).
 	+\ I have not adjusted anything here.
 +\ iK you can skip this file as it is part of the mock url eventsource so that I can demonstrate.
-	+\ in the real world the server gives you the eventsource and not this. */
+	+\ in the real world the server-side gives you the eventsource and not this file. */
 (function(window, undefined){
 
     window.MockEventGlobals = {

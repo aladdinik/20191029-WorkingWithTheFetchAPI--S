@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.14/build/mediaelementplayer.min.css" />
     <link href="zIK/02css/oikGrid.css" rel="stylesheet" type="text/css">
 <!--    <link href="zIK/02css/oikFlex.css" rel="stylesheet" type="text/css">-->
-    <title>28</title>
+    <title>28 intro to server-sent event / eventsource / this is a mock eventsource server to demo what it would be like to receive eventsource from the server</title>
 <style>
 /* + + + + + + + + + + + STYLE ---------------------------*/
 
@@ -117,6 +117,7 @@ evtSource.onerror = function(event){
 
 /*1+ iK you can skim through as this is to set up the eventsource.
 	+\ you can custom each property to suit type of data you want coming through the eventsource object.
+	+\ in the real world, the server-side written very differently, which is why you do not have to learn mockEvent object and all that is inside it.
 2+ pretend this is the server url.
 3+ how much time do you want each eventsource to arrive to the client-side.
 	+\ iK in real life the server only sents an eventsource to the client-side base on when it receive an updated message on the server-side.
