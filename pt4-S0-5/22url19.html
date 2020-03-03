@@ -48,7 +48,7 @@ try {
 		body: iKurlOb
 	})		/*4+*/
 		.then( iKresponseObject => iKresponseObject.json() ) /*5+*/
-		.then( iKjsonObject => `<img src="${iKjsonObject.data}">` )
+		.then( iKjsonObject => `<img src="${iKjsonObject.data}">` ) /*6+*/
 		.then( iKimgTag => IK.printD(iKimgTag) );
 } catch(iKerrorPar) {
 	throw new Error( "iKreject333 " + iKerrorPar )
